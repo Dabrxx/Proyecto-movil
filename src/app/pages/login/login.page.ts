@@ -11,7 +11,8 @@ import { AuthenticaService } from 'src/app/authentica.service';
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
-  constructor(public route : Router, public formBuilder:FormBuilder, public loadingCtrl: LoadingController, public authService:AuthenticaService) { }
+  
+  constructor(public formBuilder:FormBuilder, public loadingCtrl: LoadingController, public authService:AuthenticaService, public route : Router) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
