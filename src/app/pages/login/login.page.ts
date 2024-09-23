@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticaService } from 'src/app/authentica.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { AuthenticaService } from 'src/app/authentica.service';
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
-  constructor(public route : Router, public formBuilder:FormBuilder, public loadingCtrl: LoadingController, public authService:AuthenticaService) { }
+  constructor(public route : Router, public formBuilder:FormBuilder, public loadingCtrl: LoadingController, public authService:AuthenticaService, public toastController:ToastController) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -28,6 +29,16 @@ export class LoginPage implements OnInit {
     })
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000, // Duración en milisegundos
+      position: 'top'
+    });
+    toast.present();
+  }
+  
+
   get errorControl(){
     return this.loginForm?.controls;
   }
@@ -38,18 +49,21 @@ export class LoginPage implements OnInit {
     if(this.loginForm?.valid){
       const user = await this.authService.loginUser(this.loginForm.value.email, this.loginForm.value.password).catch((error) =>{
         console.log(error);
-        loading.dismiss()
-      })
+        this.presentToast('Correo o contraseña incorrectos.');
+      });
 
       if(user){
-        loading.dismiss()
+
         this.route.navigate(['/home'])
 
       }else{
-        console.log('provide correct value');
-        
+        this.presentToast('Credenciales incorrectas o faltantes.');
       }
+    } else {
+      this.presentToast('Formulario inválido, Por favor, llene los campos correctamente.');
     }
+
+    loading.dismiss();
   }
 
 }
