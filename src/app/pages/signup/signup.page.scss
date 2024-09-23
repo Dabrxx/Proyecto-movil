@@ -3,14 +3,15 @@
 }
 
 ion-item{
+    z-index: 10;
     --background: #f1f1f1;
     border-radius: 10px;
     margin-bottom: 16px;
 }
 
 .header{
-    margin-top: 100px;
-    margin-bottom: 80px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
     .subTitle{
         color: gray;
@@ -39,6 +40,107 @@ ion-item{
     }
 
     a{
+        color: rgb(101, 101, 101);
         text-decoration: none;
     }
+}
+ion-content {
+    --background: linear-gradient(180deg, #92C5DA, #C1E4D3, #7EAEAE);
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Necesario para posicionar la imagen */
+    
+  }
+
+  .screen {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .top-info {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 22px;
+  }
+
+  .bird-icon {
+    display: flex;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;  // Permite que las imágenes se posicionen relativas al contenedor
+
+    // Contenedor del círculo
+    .circle {
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(170deg, #92C5DA, #F6FBEE, #F6FBEE);
+      border-radius: 50%;           // Crea el círculo
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+      overflow: hidden;             // Oculta solo la imagen dentro del círculo
+      position: relative;           // Necesario para que .bosque se posicione dentro
+    }
+
+    // Otras imágenes que pueden sobrepasar el contenedor
+    img:not(.bosque) {              // Solo afecta a las imágenes que no son .bosque
+      position: absolute;           // Les permite sobrepasar los límites
+      padding-top: 40px;
+      padding-right: 40px;
+      width: auto;
+      height: auto;
+      z-index: 10;
+    }
+
+    // Imagen del bosque contenida dentro del círculo
+    .bosque {
+      position: absolute;
+      bottom: 0;                    // Fija la imagen en la parte inferior del círculo
+      width: 100%;                  // Asegura que la imagen ocupe todo el ancho del círculo
+      z-index: 1;                   // Para estar debajo de las otras imágenes si es necesario
+      border-end-start-radius: 60%;  // Mantén esta propiedad si es parte del diseño
+    }
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;
+    max-height: 243px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;  
+    z-index: 1;  // Menor z-index que .navigation para estar por debajo
+    object-fit: none;
+  }
+
+  .planta {
+    max-width: 100%;  /* Evita que la imagen sea más grande que su contenedor */
+    max-height: 100%; /* Evita que la imagen sea más alta que el contenedor */
+    width: auto;      /* Mantiene su tamaño original si es menor que el contenedor */
+    height: auto;
+    object-fit: none;
+  }
+
+  .center{
+    display: flex;
+    justify-content: center;
+  }
+  ion-fab {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    bottom: 50px; /* Ajusta según sea necesario */
+    left: 50%;
+    transform: translateX(-50%); /* Para centrar horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
