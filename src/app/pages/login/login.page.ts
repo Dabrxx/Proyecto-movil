@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
 
       if(user){
 
-        this.route.navigate(['/home'])
+        this.route.navigate(['/landing'])
 
       }else{
         this.presentToast('Credenciales incorrectas o faltantes.');
