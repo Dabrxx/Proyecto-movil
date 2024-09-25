@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';  // Importar el Router para la navegación
 
 @Component({
   selector: 'app-landing',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { } // Inyectar el Router en el constructor
 
   ngOnInit() {
   }
 
+  // Función para navegar a la página de Login
+  goToLogin() {
+    this.router.navigate(['/login']); // Navegar a la página de login
+  }
 }
