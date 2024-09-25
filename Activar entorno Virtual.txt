@@ -24,7 +24,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 8) npm install -g @angular/cli
 
 ---- Para instalar firebase en angular
-9) ng add @angular/fire
+9) ng add @angular/fire (autenticacion y firestore)
 
 10)(en src/app) ionic g service authentica
 

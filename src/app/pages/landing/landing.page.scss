@@ -12,6 +12,10 @@ ion-content {
     height: 100%;
     position: relative;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
 }
 
 .top-info {
@@ -23,41 +27,47 @@ ion-content {
 
 .bird-icon {
     display: flex;
+    z-index: 10;
+    margin-top: 50px;
+    padding-bottom: 40px;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
-    position: relative;
+    margin-bottom: 20px;
+    position: relative;  // Permite que las imágenes se posicionen relativas al contenedor
 
+    // Contenedor del círculo
     .circle {
-        width: 250px;
-        height: 250px;
-        background: linear-gradient(170deg, #92C5DA, #F6FBEE, #F6FBEE);
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-        overflow: hidden;
-        position: relative;
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(170deg, #92C5DA, #F6FBEE, #F6FBEE);
+      border-radius: 50%;           // Crea el círculo
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+      position: relative;           // Necesario para que .bosque se posicione dentro
     }
 
-    img:not(.bosque) {
-        position: absolute;
-        padding-top: 40px;
-        padding-right: 40px;
-        width: auto;
-        height: auto;
-        z-index: 10;
+    // Otras imágenes que pueden sobrepasar el contenedor
+    img:not(.bosque) {              // Solo afecta a las imágenes que no son .bosque
+      position: absolute;           // Les permite sobrepasar los límites
+      padding-top: 40px;
+      padding-right: 40px;
+      width: auto;
+      height: auto;
+      z-index: 10;
     }
 
+    // Imagen del bosque contenida dentro del círculo
     .bosque {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        z-index: 1;
-        border-end-start-radius: 60%;
+      position: absolute;
+      bottom: 0;                    // Fija la imagen en la parte inferior del círculo
+      height: 40%;
+      width: 73%;                  // Asegura que la imagen ocupe todo el ancho del círculo
+      z-index: 1;                   // Para estar debajo de las otras imágenes si es necesario
+      border-radius: 60%;
     }
-}
+  }
 
 .content-wrapper {
     display: flex;
@@ -77,20 +87,20 @@ ion-content {
     width: auto;
     height: auto;
     object-fit: none;
+    z-index: 1;
 }
 
-.center {
-    display: flex;
-    justify-content: center;
-}
+
 
 /* Estilos para el ion-fab-button */
 ion-fab-button {
+    --background: linear-gradient( #92C5DA);  // Color de fondo
+    --color: rgb(0, 0, 0);         // Color del ícono
     height: 100px;
     width: 100px;
-    display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto; /* Para centrar el botón horizontalmente */
+    margin-bottom: 110px;
+    z-index: 10;
 }
     

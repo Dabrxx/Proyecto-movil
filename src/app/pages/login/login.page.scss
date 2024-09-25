@@ -16,8 +16,15 @@ ion-item{
     border-radius: 10px;
     margin-bottom: 16px;
     z-index: 10;
+    color: rgb(66, 66, 66);
 }
 
+ion-padding{
+    z-index: 10;
+}
+form{
+    z-index: 10;
+}
 .header{
     margin-top: 50px;
     margin-bottom: 0px;
@@ -43,6 +50,7 @@ ion-item{
     bottom: 0;
     width: 80%;
     right: 0;
+    z-index: 10;
     p{
         font-size: 0.9rem;
     }
@@ -56,11 +64,13 @@ ion-item{
 .forgotPassword{
     display: flex;
     justify-content: flex-end;
+    z-index: 10;
     a{
         font-weight: 400;
         font-size: 0.8rem;
         text-decoration: none;
         color: rgb(101, 101, 101);
+        z-index: 10;
     }
 }
 .bird-icon {
@@ -68,7 +78,7 @@ ion-item{
     z-index: 10;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-bottom: 20px;
     position: relative;  // Permite que las imágenes se posicionen relativas al contenedor
 
     // Contenedor del círculo
@@ -81,7 +91,6 @@ ion-item{
       justify-content: center;
       align-items: center;
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-      overflow: hidden;             // Oculta solo la imagen dentro del círculo
       position: relative;           // Necesario para que .bosque se posicione dentro
     }
 
@@ -99,14 +108,15 @@ ion-item{
     .bosque {
       position: absolute;
       bottom: 0;                    // Fija la imagen en la parte inferior del círculo
-      width: 100%;                  // Asegura que la imagen ocupe todo el ancho del círculo
+      height: 40%;
+      width: 73%;                  // Asegura que la imagen ocupe todo el ancho del círculo
       z-index: 1;                   // Para estar debajo de las otras imágenes si es necesario
-      border-end-start-radius: 60%;  // Mantén esta propiedad si es parte del diseño
+      border-radius: 60%;
     }
   }
   
   /* Estilo para el ion-fab-button */
-  ion-fab {
+ion-fab {
     color: rgb(255, 255, 255);
     position: absolute;
     bottom: 50px; /* Ajusta según sea necesario */
@@ -115,19 +125,27 @@ ion-item{
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
+
+ion-fab-button {
+    --background: linear-gradient( #92C5DA);  // Color de fondo
+    --color: rgb(0, 0, 0);         // Color del ícono
+}
+
+
 
   
   /* Estilo para el icono dentro del ion-fab-button */
-  ion-icon {
+ion-icon {
     font-size: 24px; /* Tamaño del icono */
     color: white;    /* Color del icono */
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  .content-wrapper {
+.content-wrapper {
     display: flex;
     justify-content: space-between;  
     align-items: center;
@@ -135,6 +153,6 @@ ion-item{
     width: 100%;
     position: absolute;
     bottom: 0;  
-    z-index: 1;
+    z-index: 0;
     object-fit: none;
 }
