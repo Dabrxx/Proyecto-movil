@@ -39,6 +39,7 @@ ion-item{
 
     p{
         font-size: 0.9rem;
+        z-index: 10;
     }
 
     a{
@@ -69,6 +70,7 @@ ion-content {
     justify-content: space-between;
     color: #fff;
     font-size: 22px;
+    z-index: 10;
   }
 
   .bird-icon {
@@ -131,6 +133,7 @@ ion-content {
     width: auto;      /* Mantiene su tamaño original si es menor que el contenedor */
     height: auto;
     object-fit: none;
+    z-index: 1;
   }
 
   .center{
@@ -149,5 +152,8 @@ ion-content {
 }
 ion-fab-button {
   --background: linear-gradient( #92C5DA);  // Color de fondo
-  --color: rgb(0, 0, 0);         // Color del ícono
+  --color: rgb(255, 255, 255);         // Color del ícono
+}
+ion-text{
+  z-index: 10;
 }
