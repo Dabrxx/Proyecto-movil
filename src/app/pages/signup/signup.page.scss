@@ -7,6 +7,7 @@ ion-item{
     --background: #f1f1f1;
     border-radius: 10px;
     margin-bottom: 16px;
+    color: rgb(66, 66, 66);
 }
 
 .header{
@@ -43,6 +44,7 @@ ion-item{
     a{
         color: rgb(101, 101, 101);
         text-decoration: none;
+        z-index: 10;
     }
 }
 ion-content {
@@ -79,8 +81,8 @@ ion-content {
 
     // Contenedor del círculo
     .circle {
-      width: 125px;
-      height: 125px;
+      width: 200px;
+      height: 200px;
       background: linear-gradient(170deg, #92C5DA, #F6FBEE, #F6FBEE);
       border-radius: 50%;           // Crea el círculo
       display: flex;
@@ -95,8 +97,8 @@ ion-content {
       position: absolute;           // Les permite sobrepasar los límites
       padding-top: 40px;
       padding-right: 40px;
-      width: auto;
-      height: auto;
+      width: 100%;
+      height: 100%;
       z-index: 10;
     }
 
