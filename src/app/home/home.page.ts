@@ -1,6 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { AuthenticaService } from '../authentica.service';
 import { Router } from '@angular/router';
+import { StorageService } from '../storageS.service';
 
 @Component({
   selector: 'app-home',
@@ -10,20 +11,31 @@ import { Router } from '@angular/router';
 export class HomePage implements OnInit {
   userName: string;
 
-  constructor(public route:Router ,public authService:AuthenticaService) {}
+  constructor(public route:Router ,public authService:AuthenticaService, private storageService: StorageService) {}
 
   async ngOnInit() {
-    // Obtener el perfil del usuario
-    const user = await this.authService.getProfile();
-    if (user) {
-      this.userName = user.displayName || 'Usuario';  // Mostrar "Usuario" si displayName está vacío
+    const storedUser = await this.storageService.get('user')
+
+    if (storedUser) {
+      this.userName = storedUser.displayName || 'Usuario';
+    } else {
+      const user = await this.authService.getProfile();
+      if(user) {
+        this.userName = user.displayName || 'Usuario';
+
+        await this.storageService.set('user', {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email
+        })
+      }
     }
   }
 
   async logout(){
-    this.authService.signOut().then(()=>{
-      this.route.navigate(['/login'])
-    })
+    await this.authService.signOut()
+    await this.storageService.clear()
+    this.route.navigate(['/login'])
   }
 
 }
