@@ -30,6 +30,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 11) (para librerias de form) npm install @ionic-native/core --legacy--peer-deps
 
+12)(para libreria IonicStorage) npm install @ionic/storage
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ---- capacitor
 12) ionic capacitor add android
