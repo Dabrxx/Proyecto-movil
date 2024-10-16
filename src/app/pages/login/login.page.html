@@ -4,6 +4,13 @@
     <p class="subTitle"> Ingrese con su usuario para acceder a su cuenta</p>
   </div>
 
+  <div class="bird-icon">
+    <div class="circle">
+      <img src="assets/Bird-icon.png" alt="Bird">
+      <img src="assets/bosque.png" alt="bosque" class="bosque">
+    </div>
+  </div>
+
     <form [formGroup]="loginForm">
       <div class="ion-padding">
         <ion-item>
@@ -41,18 +48,22 @@
         </div>
 
         <div class="forgotPassword">
-          <a [routerLink]="['/reset-password']" style="color: #ff5c3f"> ¿Olvidaste tu contraseña?</a>
+          <a [routerLink]="['/reset-password']"> ¿Olvidaste tu contraseña?</a>
         </div>
 
         <div class="signupLink">
-          <p >¿Nuevo usuario?<a style="color: #ff5c3f" [routerLink]="['/signup']">Registrarse ahora</a></p>
+          <p >¿Nuevo usuario?<a [routerLink]="['/signup']"> Registrarse ahora</a></p>
         </div>
       </div>
 
-      <ion-fab vertical="bottom" horizontal="end" style="margin-bottom: 30px;">
+      <ion-fab>
         <ion-fab-button (click)="login()">
           <ion-icon name="chevron-forward"></ion-icon>
         </ion-fab-button>
       </ion-fab>
     </form>
+    <div class="content-wrapper">
+      <img src="assets/planta-izq.png" alt="Planta" class="planta">
+      <img src="assets/planta-der.png" alt="Planta" class="planta">
+    </div>
 </ion-content>
