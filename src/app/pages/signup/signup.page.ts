@@ -52,6 +52,7 @@ export class SignupPage implements OnInit {
     if(this.regForm?.valid){
       const user = await this.authService.registerUser(this.regForm.value.email, this.regForm.value.password, this.regForm.value.fullname).catch((error) =>{
         console.log(error);
+        this.presentToast('Este correo ya está registrado.')
         loading.dismiss()
       })
 
