@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Route } from '@angular/router'
+import { Router } from '@angular/router'
 import { StorageService } from 'src/app/storageS.service';
 
 @Component({
