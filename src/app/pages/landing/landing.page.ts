@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Route } from '@angular/router'
+import { StorageService } from 'src/app/storageS.service';
 
 @Component({
   selector: 'app-landing',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private storageService: StorageService) { }
 
   ngOnInit() {
   }
 
+  async ionViewDidEnter()  {
+    this.checkSession()
+  }
+
+  async checkSession() {
+    const sessionStatus = await this.storageService.get('isSessionActive')
+    if (sessionStatus) {
+      this.router.navigate(['/home'])
+    } else {
+      this.router.navigate(['/login'])
+    }
+  }
 }
