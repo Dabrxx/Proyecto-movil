@@ -34,8 +34,10 @@ export class HomePage implements OnInit {
 
   async logout(){
     await this.authService.signOut()
+    await this.storageService.remove('isSessionActive');
     await this.storageService.clear()
-    this.route.navigate(['/login'])
+    
+    this.route.navigate(['/splash'])
   }
 
 }

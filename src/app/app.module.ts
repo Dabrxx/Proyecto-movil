@@ -28,7 +28,7 @@ import { provideHttpClient } from '@angular/common/http';
         AngularFireAuthModule,
         AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient(), provideFirebaseApp(() => initializeApp({"projectId":"ionicbiodiversity","appId":"1:500256860315:web:f5653dfd7f20cac0a7fe3e","databaseURL":"https://ionicbiodiversity-default-rtdb.firebaseio.com","storageBucket":"ionicbiodiversity.appspot.com","apiKey":"AIzaSyBG_25O92h-ZWRYCwI6NUhRdnBYYN5r4t4","authDomain":"ionicbiodiversity.firebaseapp.com","messagingSenderId":"500256860315"})), provideAuth(() => getAuth()), provideDatabase(() => getDatabase())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -63,6 +63,7 @@ export class LoginPage implements OnInit {
           }
 
           await this.storageService.set('user', userClone)
+          await this.storageService.set('isSessionActive', true);
 
           this.route.navigate(['/landing'])
 

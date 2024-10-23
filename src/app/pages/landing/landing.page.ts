@@ -11,8 +11,7 @@ export class LandingPage implements OnInit {
 
   constructor(private router: Router, private storageService: StorageService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async ionViewDidEnter()  {
     this.checkSession()
