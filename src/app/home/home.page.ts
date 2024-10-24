@@ -37,7 +37,7 @@ export class HomePage implements OnInit {
     await this.storageService.remove('isSessionActive');
     await this.storageService.clear()
     
-    this.route.navigate(['/splash'])
+    this.route.navigate(['/login'])
   }
 
 }
