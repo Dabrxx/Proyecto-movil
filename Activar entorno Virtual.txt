@@ -29,3 +29,13 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 10)(en src/app) ionic g service authentica
 
 11) (para librerias de form) npm install @ionic-native/core --legacy--peer-deps
+
+12)(para libreria IonicStorage) npm install @ionic/storage
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+---- capacitor
+12) ionic capacitor add android
+
+-- para cada cambio en capacitor
+13) ionic capacitor sync
+
+14)ionic capacitor open android
