@@ -9,8 +9,15 @@ export class AuthenticaService {
 
   constructor(public ngFireAuth: AngularFireAuth) { }
 
-  async registerUser (email:string, password:string) {
-    return await this.ngFireAuth.createUserWithEmailAndPassword(email, password)
+  async registerUser (email:string, password:string, displayName: string) {
+    const userCredential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    if (userCredential.user) {
+      await userCredential.user.updateProfile({
+        displayName: displayName
+      });
+      
+    }
+    return userCredential;
   }
 
   async loginUser (email:string, password:string) {
@@ -26,6 +33,10 @@ export class AuthenticaService {
   }
 
   async getProfile() {
-    return await this.ngFireAuth.currentUser
+    const user = await this.ngFireAuth.currentUser;
+    if (user && !user.displayName) {
+      console.warn('El displayName no está configurado en Firebase');
+    }
+    return user;
   }
 }

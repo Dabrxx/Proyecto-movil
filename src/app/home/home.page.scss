@@ -1,27 +1,92 @@
-#container {
-  text-align: center;
+ion-content {
+  position: relative;
+  --background: linear-gradient(180deg, #92C5DA, #C1E4D3, #7EAEAE);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; // Alineación en columna para que los elementos se centren verticalmente
+}
 
+.header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  
+  .title {
+      font-size: 2rem;
+      margin: 0;
+  }
+
+  .subTitle {
+      color: gray;
+      font-size: 0.9rem;
+  }
+}
+
+
+.bird-icon {
+  display: flex;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;  // Permite que las imágenes se posicionen relativas al contenedor
+
+  // Contenedor del círculo
+  .circle {
+      width: 300px;
+      height: 300px;
+    background: linear-gradient(170deg, #92C5DA, #F6FBEE, #F6FBEE);
+    border-radius: 50%;           // Crea el círculo
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    position: relative;           // Necesario para que .bosque se posicione dentro
+  }
+
+  // Otras imágenes que pueden sobrepasar el contenedor
+  img:not(.bosque) {              // Solo afecta a las imágenes que no son .bosque
+    position: absolute;           // Les permite sobrepasar los límites
+    padding-top: 40px;
+    padding-right: 40px;
+    width: auto;
+    height: auto;
+    z-index: 10;
+  }
+
+  // Imagen del bosque contenida dentro del círculo
+  .bosque {
+    position: absolute;
+    bottom: 0;                    // Fija la imagen en la parte inferior del círculo
+    height: 40%;
+    width: 73%;                  // Asegura que la imagen ocupe todo el ancho del círculo
+    z-index: 1;                   // Para estar debajo de las otras imágenes si es necesario
+    border-radius: 60%;
+  }
+}
+
+ion-fab {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 20px; // Ajusta el margen inferior según lo que necesites
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+ion-button {
+  color: gray;
+  --background: linear-gradient(180deg,#C1E4D3, #7EAEAE);
+  z-index: 10;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
+  max-height: 243px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;  
+  z-index: 1;
+  object-fit: none;
 }

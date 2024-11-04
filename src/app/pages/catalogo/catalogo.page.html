@@ -1,0 +1,47 @@
+
+<ion-content [fullscreen]="true">
+  <div class="screen">
+    <!-- No se porque pero esto no se saca -->
+    <div class="top-info">
+      <ion-buttons  slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </div>
+
+    <!-- Texto bienvenida -->
+    <div>
+      <p class="center">Catalogo de aves</p>
+    </div>
+
+    <!-- boton -->
+    <div class="scroll">
+      <ion-fab-button [routerLink]="['/landing']">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-fab-button>
+
+
+      <ion-fab-button [routerLink]="['/landing']">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-fab-button>
+      
+      <ion-fab-button [routerLink]="['/landing']">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button [routerLink]="['/landing']">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button [routerLink]="['/landing']">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-fab-button>
+    </div>
+
+    <!-- Plantas -->
+    <div class="content-wrapper">
+      <img src="assets/planta-izq.png" alt="Planta" class="planta">
+      <img src="assets/planta-der.png" alt="Planta" class="planta">
+    </div>
+
+  </div>
+</ion-content>

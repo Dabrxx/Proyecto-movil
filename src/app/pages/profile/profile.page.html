@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="profileForm" (ngSubmit)="updateUserProfile()"> 
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input formControlName="displayName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Correo</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-fab>
+      <ion-button [routerLink]="['/home']">Volver</ion-button>
+      <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">Actualizar Perfil</ion-button>
+      <ion-button expand="block" color="danger" (click)="deletedUserProfile()">Eliminar Cuenta</ion-button>
+    </ion-fab>
+  </form>
+
+</ion-content>

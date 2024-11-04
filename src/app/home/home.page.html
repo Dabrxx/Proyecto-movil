@@ -1,20 +1,25 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="header">
+    <ion-title class="title">Bienvenido, {{userName}}</ion-title>
+  </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="bird-icon">
+    <div class="circle">
+      <img src="assets/Bird-icon.png" alt="Bird">
+      <img src="assets/bosque.png" alt="bosque" class="bosque">
+    </div>
+  </div>
+
+  <ion-fab>
+    <ion-button (click)="logout()">Cerrar sesión</ion-button>
+    <ion-button [routerLink]="['/catalogo']">Catalogo</ion-button>
+    <ion-button [routerLink]="['/profile']">Perfil</ion-button>
+  </ion-fab>
+
+  
+
+  <div class="content-wrapper">
+    <img src="assets/planta-izq.png" alt="Planta" class="planta">
+    <img src="assets/planta-der.png" alt="Planta" class="planta">
   </div>
 </ion-content>

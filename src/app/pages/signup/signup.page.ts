@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticaService } from 'src/app/authentica.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +14,7 @@ import { AuthenticaService } from 'src/app/authentica.service';
 export class SignupPage implements OnInit {
   regForm: FormGroup;
 
-  constructor(public formBuilder:FormBuilder, public loadingCtrl: LoadingController, public authService:AuthenticaService, public router : Router) { }
+  constructor(public formBuilder:FormBuilder, public loadingCtrl: LoadingController, public authService:AuthenticaService, public router : Router, public toastController:ToastController) { }
 
   ngOnInit() {
     this.regForm = this.formBuilder.group({
@@ -30,6 +31,15 @@ export class SignupPage implements OnInit {
 
     })
   }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000, // Duración en milisegundos
+      position: 'top'
+    });
+    toast.present();
+  }
   
   get errorControl(){
     return this.regForm?.controls;
@@ -38,9 +48,11 @@ export class SignupPage implements OnInit {
   async signUp (){
     const loading = await this.loadingCtrl.create();
     await loading.present();
+
     if(this.regForm?.valid){
-      const user = await this.authService.registerUser(this.regForm.value.email, this.regForm.value.password).catch((error) =>{
+      const user = await this.authService.registerUser(this.regForm.value.email, this.regForm.value.password, this.regForm.value.fullname).catch((error) =>{
         console.log(error);
+        this.presentToast('Este correo ya está registrado.')
         loading.dismiss()
       })
 
@@ -49,9 +61,12 @@ export class SignupPage implements OnInit {
         this.router.navigate(['/home'])
 
       }else{
-        console.log('provide correct value');
+        console.log('provide correct value')
         
       }
+    } else {
+      loading.dismiss()
+      this.presentToast('Formulario inválido, Por favor, llene los campos correctamente.')
     }
   }
 
