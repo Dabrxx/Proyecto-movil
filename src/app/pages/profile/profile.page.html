@@ -1,10 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <ion-title class="title">Perfil</ion-title>
+    <p class="subTitle">Actualice su nombre de usuario</p>
+  </div>
 
-<ion-content>
+  <div class="bird-icon">
+    <div class="circle">
+      <img src="assets/Bird-icon.png" alt="Bird">
+      <img src="assets/bosque.png" alt="bosque" class="bosque">
+    </div>
+  </div>
+
   <form [formGroup]="profileForm" (ngSubmit)="updateUserProfile()"> 
     <ion-item>
       <ion-label position="stacked">Nombre</ion-label>
@@ -16,11 +22,12 @@
       <ion-input formControlName="email" type="email"></ion-input>
     </ion-item>
 
-    <ion-fab>
-      <ion-button [routerLink]="['/home']">Volver</ion-button>
+    <div class="button-container">
+      <ion-button class="back-button" [routerLink]="['/home']">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
       <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">Actualizar Perfil</ion-button>
       <ion-button expand="block" color="danger" (click)="deletedUserProfile()">Eliminar Cuenta</ion-button>
-    </ion-fab>
+    </div>
   </form>
-
 </ion-content>
