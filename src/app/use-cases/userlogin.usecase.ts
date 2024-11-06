@@ -31,7 +31,7 @@ export class UserLoginUseCase {
             return { success: false, message: "Credenciales incorrectas" };
           }
         } catch (error) {
-          let errorMessage = "Error en el inicio de sesión";
+          let errorMessage = "Correo o Contraseña incorrectos";
           if (error.code === 'auth/wrong-password') errorMessage = "Contraseña incorrecta.";
           return { success: false, message: errorMessage };
         }
