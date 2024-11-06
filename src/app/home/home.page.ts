@@ -14,6 +14,14 @@ export class HomePage implements OnInit {
   constructor(public route:Router ,public authService:AuthenticaService, private storageService: StorageService) {}
 
   async ngOnInit() {
+    this.loadUserName()
+  }
+
+  ionViewWillEnter() {
+    this.loadUserName()
+  }
+
+  async loadUserName(){
     const storedUser = await this.storageService.get('user')
 
     if (storedUser) {

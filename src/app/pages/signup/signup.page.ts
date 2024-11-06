@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticaService } from 'src/app/authentica.service';
 import { ToastController } from '@ionic/angular';
+import { SignUpUseCase } from 'src/app/use-cases/signup.usecase';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +15,12 @@ import { ToastController } from '@ionic/angular';
 export class SignupPage implements OnInit {
   regForm: FormGroup;
 
-  constructor(public formBuilder:FormBuilder, public loadingCtrl: LoadingController, public authService:AuthenticaService, public router : Router, public toastController:ToastController) { }
+  constructor(public formBuilder:FormBuilder,
+              public loadingCtrl: LoadingController,
+              public authService:AuthenticaService,
+              public router : Router,
+              public toastController:ToastController,
+              private signUpUseCase: SignUpUseCase) { }
 
   ngOnInit() {
     this.regForm = this.formBuilder.group({
@@ -45,29 +51,25 @@ export class SignupPage implements OnInit {
     return this.regForm?.controls;
   }
 
-  async signUp (){
+  async signUp() {
     const loading = await this.loadingCtrl.create();
     await loading.present();
 
-    if(this.regForm?.valid){
-      const user = await this.authService.registerUser(this.regForm.value.email, this.regForm.value.password, this.regForm.value.fullname).catch((error) =>{
-        console.log(error);
-        this.presentToast('Este correo ya está registrado.')
-        loading.dismiss()
-      })
+    if (this.regForm?.valid) {
+      const { email, password, fullname } = this.regForm.value;
+      const result = await this.signUpUseCase.executeSignUp(email, password, fullname);
+      loading.dismiss();
 
-      if(user){
-        loading.dismiss()
-        this.router.navigate(['/home'])
-
-      }else{
-        console.log('provide correct value')
-        
+      if (result.success) {
+        this.router.navigate(['/home']);
+      } else {
+        this.presentToast(result.message);
       }
     } else {
-      loading.dismiss()
-      this.presentToast('Formulario inválido, Por favor, llene los campos correctamente.')
+      loading.dismiss();
+      this.presentToast('Formulario inválido, Por favor, llene los campos correctamente.');
     }
   }
+
 
 }

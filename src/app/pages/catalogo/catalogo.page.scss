@@ -1,63 +1,100 @@
 ion-content {
-    --background: linear-gradient(180deg, #92C5DA, #C1E4D3, #7EAEAE);
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative; /* Necesario para posicionar la imagen */
+  --background: linear-gradient(180deg, #92C5DA, #C1E4D3, #7EAEAE);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .screen {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-    overflow: scroll;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  overflow: scroll;
 }
 
 .content-wrapper {
-    display: flex;
-    justify-content: space-between;  
-    max-height: 243px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;  
-    z-index: 1;
-    object-fit: none;
+  display: flex;
+  justify-content: space-between;
+  max-height: 243px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  object-fit: none;
 }
 
 .planta {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: none;
-    z-index: 1;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: none;
+  z-index: 1;
 }
 
-.scroll{
-    overflow: scroll;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    width: 50%;
-    z-index: 10;
+.list {
+  display: flex;
+  z-index: 10;
+  width: 80%; /* Ancho del 80% */
+  flex-direction: column; /* Apilar elementos uno sobre otro */
+  background-color: transparent; /* Fondo transparente */
+  padding: 0; /* Eliminar relleno para evitar bordes adicionales */
+  margin: 0; /* Eliminar margen para evitar desplazamientos */
+  margin-top: 9100px;
 }
 
-/* Estilos para el ion-fab-button */
-ion-fab-button {
-    --background: linear-gradient( #92C5DA);  // Color de fondo
-    --color: rgb(255, 255, 255);         // Color del ícono
-    height: 100px;
-    width: 100px;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 110px;
-    z-index: 10;
+.item-ave {
+  display: flex;
+  flex-direction: column; /* Apilar elementos uno sobre otro */
+  --background-color: transparent; /* Fondo transparente */
+  width: 100%; /* Asegurarse que ocupe todo el ancho disponible */
+  padding: 10px 0; /* Espaciado vertical entre los items */
+  margin: 5px 0; /* Espaciado entre los items */
 }
-    
+
+.transparent {
+  --background-color: transparent; /* Fondo transparente */
+}
+
+ion-thumbnail {
+  display: flex;
+  margin-bottom: 10px; /* Espacio entre la imagen y el texto */
+  padding: auto;
+}
+
+ion-label {
+  margin-left: 20px;
+  font-size: 16px; /* Tamaño de fuente ajustado */
+  color: #fff; /* Color de texto blanco para contraste con el fondo */
+}
+
+img {
+  width: auto;
+  height: auto;
+}
+
+.back-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  --background: rgb(0, 0, 0);
+  --color: rgb(255, 255, 255);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+
+
+.top-info {
+  z-index: 10;
+}

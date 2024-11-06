@@ -11,9 +11,12 @@
   </div>
 
   <ion-fab>
-    <ion-button (click)="logout()">Cerrar sesión</ion-button>
     <ion-button [routerLink]="['/catalogo']">Catalogo</ion-button>
+    <ion-button [routerLink]="['/profile']">Perfil</ion-button>
+    <ion-button (click)="logout()" color="danger">Cerrar sesión</ion-button>
   </ion-fab>
+
+  
 
   <div class="content-wrapper">
     <img src="assets/planta-izq.png" alt="Planta" class="planta">
