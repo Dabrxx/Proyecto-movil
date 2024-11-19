@@ -31,6 +31,10 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 11) (para librerias de form) npm install @ionic-native/core --legacy--peer-deps
 
 12)(para libreria IonicStorage) npm install @ionic/storage
+
+13)(camara) npm install @capacitor/camera
+
+14)(para compresion de imagen) npm install browser-image-resizer
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ---- capacitor
 12) ionic capacitor add android
