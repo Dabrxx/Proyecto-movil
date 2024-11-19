@@ -6,12 +6,16 @@
 
   <div class="bird-icon">
     <div class="circle">
-      <img src="assets/Bird-icon.png" alt="Bird">
-      <img src="assets/bosque.png" alt="bosque" class="bosque">
+      <img
+        [src]="profileImage || 'assets/Bird-icon.png'"
+        alt="Foto de Perfil"
+        (click)="updateProfileImage()"
+        class="profile-image"
+      />
     </div>
   </div>
 
-  <form [formGroup]="profileForm" (ngSubmit)="updateUserProfile()"> 
+  <form [formGroup]="profileForm" (ngSubmit)="updateUserProfile()">
     <ion-item>
       <ion-label position="stacked">Nombre</ion-label>
       <ion-input formControlName="displayName"></ion-input>
@@ -27,7 +31,7 @@
         <ion-icon name="chevron-forward"></ion-icon>
       </ion-button>
       <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">Actualizar Perfil</ion-button>
-      <ion-button expand="block" color="danger" (click)="deletedUserProfile()">Eliminar Cuenta</ion-button>
+      <ion-button expand="block" color="danger" (click)="deleteUserProfile()">Eliminar Cuenta</ion-button>
     </div>
   </form>
 </ion-content>

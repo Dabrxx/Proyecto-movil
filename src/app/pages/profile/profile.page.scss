@@ -30,39 +30,39 @@ ion-content {
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    position: relative;  // Permite que las imágenes se posicionen relativas al contenedor
-
+    position: relative; /* Mantengo esta propiedad */
+  
     // Contenedor del círculo
     .circle {
-        width: 200px;
-        height: 200px;
+      width: 200px;
+      height: 200px;
       background: linear-gradient(170deg, #92C5DA, #F6FBEE, #F6FBEE);
-      border-radius: 50%;           // Crea el círculo
+      border-radius: 50%; /* Crea el contenedor redondo */
       display: flex;
       justify-content: center;
       align-items: center;
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-      position: relative;           // Necesario para que .bosque se posicione dentro
+      position: relative; /* Mantengo esta propiedad */
+      overflow: hidden; /* Recorta cualquier contenido que sobresalga del círculo */
     }
-
-    // Otras imágenes que pueden sobrepasar el contenedor
-    img:not(.bosque) {              // Solo afecta a las imágenes que no son .bosque
-      position: absolute;           // Les permite sobrepasar los límites
-      padding-top: 40px;
-      padding-right: 40px;
-      width: auto;
-      height: auto;
+  
+    // Estilo para las imágenes generales, excluyendo las de clase .bosque
+    img:not(.bosque) {
+      position: static; /* Cambiado de absolute a static para evitar desalineaciones */
+      width: 100%; /* Asegura que ocupe todo el círculo */
+      height: 100%;
+      object-fit: cover; /* Ajusta la imagen para que cubra completamente el círculo */
       z-index: 10;
     }
-
+  
     // Imagen del bosque contenida dentro del círculo
     .bosque {
       position: absolute;
-      bottom: 0;                    // Fija la imagen en la parte inferior del círculo
+      bottom: 0; /* Fija la imagen en la parte inferior del círculo */
       height: 40%;
-      width: 73%;                  // Asegura que la imagen ocupe todo el ancho del círculo
-      z-index: 1;                   // Para estar debajo de las otras imágenes si es necesario
-      border-radius: 60%;
+      width: 73%; /* Mantengo este valor según tu diseño */
+      z-index: 1;
+      border-radius: 60%; /* Mantengo esta propiedad */
     }
   }
 
@@ -152,3 +152,5 @@ ion-button {
     --color: rgb(255, 255, 255);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
+
+  
