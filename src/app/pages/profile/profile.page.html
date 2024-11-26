@@ -28,10 +28,11 @@
 
     <div class="button-container">
       <ion-button class="back-button" [routerLink]="['/home']">
-        <ion-icon name="chevron-forward"></ion-icon>
+        <ion-icon name="chevron-back"></ion-icon>
       </ion-button>
       <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">Actualizar Perfil</ion-button>
       <ion-button expand="block" color="danger" (click)="deleteUserProfile()">Eliminar Cuenta</ion-button>
+      <ion-button expand="block" (click)="logout()" color="danger">Cerrar sesión</ion-button>
     </div>
   </form>
 </ion-content>

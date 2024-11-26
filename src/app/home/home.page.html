@@ -4,22 +4,38 @@
   </div>
 
   <div class="bird-icon">
-    <div class="circle">
-      <img src="assets/Bird-icon.png" alt="Bird">
+    <div class="circle1">
+      <img src="assets/Bird-icon.png" alt="bird" class="bird">
+    </div>
+    <div class="circle2">
       <img src="assets/bosque.png" alt="bosque" class="bosque">
     </div>
   </div>
 
-  <ion-fab>
-    <ion-button [routerLink]="['/catalogo']">Catalogo</ion-button>
-    <ion-button [routerLink]="['/profile']">Perfil</ion-button>
-    <ion-button (click)="logout()" color="danger">Cerrar sesión</ion-button>
-  </ion-fab>
-
-  
 
   <div class="content-wrapper">
     <img src="assets/planta-izq.png" alt="Planta" class="planta">
     <img src="assets/planta-der.png" alt="Planta" class="planta">
   </div>
 </ion-content>
+
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <!-- Tab 1 -->
+    <ion-tab-button [routerLink]="['/catalogo']">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Catalogo</ion-label>
+    </ion-tab-button>
+    <!-- Tab 2 -->
+    <ion-tab-button [routerLink]="['/preffer']">
+      <ion-icon name="bookmark-outline"></ion-icon>
+      <ion-label>Favoritos</ion-label>
+    </ion-tab-button> 
+    <!-- Tab 3 -->
+    <ion-tab-button [routerLink]="['/profile']">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

@@ -47,6 +47,10 @@ const routes: Routes = [
     path: 'species-details/:id', 
     loadChildren: () => import('./pages/species-details/species-details.module').then(m => m.SpeciesDetailsPageModule) 
   },
+  {
+    path: 'preffer',
+    loadChildren: () => import('./pages/preffer/preffer.module').then( m => m.PrefferPageModule)
+  },
 
 
 

@@ -9,6 +9,11 @@ export class AuthenticaService {
 
   constructor(public ngFireAuth: AngularFireAuth) { }
 
+  async getUserUID(): Promise<string | null> {
+    const user = await this.ngFireAuth.currentUser;
+    return user ? user.uid : null;
+  }
+
   async registerUser (email:string, password:string, displayName: string) {
     const userCredential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
     if (userCredential.user) {

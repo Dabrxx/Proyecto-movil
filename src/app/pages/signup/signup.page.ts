@@ -5,6 +5,7 @@ import { LoadingController } from '@ionic/angular';
 import { AuthenticaService } from 'src/app/authentica.service';
 import { ToastController } from '@ionic/angular';
 import { SignUpUseCase } from 'src/app/use-cases/signup.usecase';
+import { UserProfileService } from 'src/app/user-profile.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,12 +16,15 @@ import { SignUpUseCase } from 'src/app/use-cases/signup.usecase';
 export class SignupPage implements OnInit {
   regForm: FormGroup;
 
-  constructor(public formBuilder:FormBuilder,
-              public loadingCtrl: LoadingController,
-              public authService:AuthenticaService,
-              public router : Router,
-              public toastController:ToastController,
-              private signUpUseCase: SignUpUseCase) { }
+  constructor(
+    public formBuilder:FormBuilder,
+    public loadingCtrl: LoadingController,
+    public authService:AuthenticaService,
+    public router : Router,
+    public toastController:ToastController,
+    private signUpUseCase: SignUpUseCase,
+    private userProfileService:UserProfileService
+    ) { }
 
   ngOnInit() {
     this.regForm = this.formBuilder.group({
@@ -54,16 +58,24 @@ export class SignupPage implements OnInit {
   async signUp() {
     const loading = await this.loadingCtrl.create();
     await loading.present();
-
+  
     if (this.regForm?.valid) {
       const { email, password, fullname } = this.regForm.value;
-      const result = await this.signUpUseCase.executeSignUp(email, password, fullname);
-      loading.dismiss();
-
-      if (result.success) {
-        this.router.navigate(['/home']);
-      } else {
-        this.presentToast(result.message);
+      try {
+        const result = await this.signUpUseCase.executeSignUp(email, password, fullname);
+        loading.dismiss();
+  
+        if (result.success) {
+          // Obtener el usuario directamente después del registro
+          const user = await this.authService.getProfile();
+          await this.userProfileService.createUserProfile(user.uid, email, fullname);
+          this.router.navigate(['/home']);
+        } else {
+          this.presentToast(result.message);
+        }
+      } catch (error) {
+        loading.dismiss();
+        this.presentToast('Error al registrar el usuario: ' + error.message);
       }
     } else {
       loading.dismiss();

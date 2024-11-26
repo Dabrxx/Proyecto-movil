@@ -10,6 +10,7 @@ import { ProfileUseCase } from 'src/app/use-cases/profile.usecase';
 import { ImageService } from 'src/app/image-service.service';
 import { FirestoreStorageService } from 'src/app/firestore-storage.service';
 import { ImageUseCase } from 'src/app/use-cases/image.usecase';
+import { AuthenticaService } from '../../authentica.service';
 
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
@@ -24,6 +25,7 @@ export class ProfilePage implements OnInit {
   profileImage: string | null = null;
 
   constructor(
+    public authService:AuthenticaService,
     private formBuilder: FormBuilder,
     private userProfileService: UserProfileService,
     private router: Router,
@@ -182,5 +184,12 @@ export class ProfilePage implements OnInit {
       position: 'top',
     });
     toast.present();
+  }
+  async logout(){
+    await this.authService.signOut()
+    await this.storageService.remove('isSessionActive');
+    await this.storageService.clear()
+    
+    this.router.navigate(['/login'])
   }
 }

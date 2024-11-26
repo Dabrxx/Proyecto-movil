@@ -80,17 +80,7 @@ ion-button {
   z-index: 10;
 }
 
-.content-wrapper {
-  display: flex;
-  justify-content: space-between;  
-  align-items: center;
-  max-height: 243px;
-  width: 100%;
-  position: absolute;
-  bottom: 0;  
-  z-index: 1;
-  object-fit: none;
-}
+
 
 .info {
   z-index: 10;

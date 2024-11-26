@@ -1,0 +1,44 @@
+<ion-content [fullscreen]="true">
+  <div class="screen">
+    <!-- Botón de regreso -->
+    <div>
+      <ion-button class="back-button" [routerLink]="['/home']">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div>
+      <p class="center">Catálogo de aves</p>
+    </div>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Mis Favoritos</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <div *ngIf="favorites.length === 0">
+      <p class="center">No tienes favoritos guardados.</p>
+    </div>
+
+    <ion-list *ngIf="favorites.length > 0">
+      <ion-item *ngFor="let favorite of favorites">
+        <ion-thumbnail slot="start">
+          <img [src]="favorite.photo" alt="Imagen del pájaro" />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h2>{{ favorite.commonName }}</h2>
+          <p>{{ favorite.scientificName }}</p>
+        </ion-label>
+        
+        <ion-button fill="clear" color="danger" (click)="deleteFavorite(favorite.id)">
+          Eliminar
+        </ion-button>
+        <ion-button fill="clear" color="primary" (click)="modifyFavorite(favorite)">
+          Modificar
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -14,6 +14,31 @@ export class UserProfileService {
 
   constructor(private ngFireAuth:AngularFireAuth, private db: AngularFireDatabase, private storageService: StorageService ) {}
 
+  async createUserProfile(uid: string, email: string, displayName: string) {
+    try {
+      // Crear un nuevo perfil en Firestore bajo la colección /users/{uid}
+      const userProfileRef = this.db.object(`/users/${uid}`);
+      await userProfileRef.set({
+        email,
+        displayName,
+        photoURL: '', // Puedes dejarlo vacío o agregar una imagen predeterminada
+      });
+
+      // También podemos almacenar el perfil en el almacenamiento local si es necesario
+      const userProfile = {
+        uid,
+        email,
+        displayName,
+        photoURL: '',
+      };
+      await this.storageService.set('user', userProfile);
+
+      return { success: true, message: 'Perfil creado en Firestore' };
+    } catch (error) {
+      throw new Error('Error al crear el perfil en Firestore: ' + error.message);
+    }
+  }
+
   async getUserProfile(){
     const user = await firstValueFrom(this.ngFireAuth.authState)
     if(user) {

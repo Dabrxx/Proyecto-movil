@@ -48,16 +48,20 @@ ion-content {
   background-color: transparent; /* Fondo transparente */
   padding: 0; /* Eliminar relleno para evitar bordes adicionales */
   margin: 0; /* Eliminar margen para evitar desplazamientos */
-  margin-top: 9100px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  overflow-y: scroll; /* Activar scroll vertical */
+  scrollbar-width: none; /* Ocultar la barra de desplazamiento en Firefox */
+  -webkit-overflow-scrolling: touch; /* Desplazamiento suave en dispositivos táctiles */
 }
 
 .item-ave {
   display: flex;
   flex-direction: column; /* Apilar elementos uno sobre otro */
   --background-color: transparent; /* Fondo transparente */
-  width: 100%; /* Asegurarse que ocupe todo el ancho disponible */
-  padding: 10px 0; /* Espaciado vertical entre los items */
-  margin: 5px 0; /* Espaciado entre los items */
+  padding: 45px 0;
+  height: 100%;
+  --background-color: transparent; /* Fondo transparente */ 
 }
 
 .transparent {
@@ -65,15 +69,19 @@ ion-content {
 }
 
 ion-thumbnail {
+  height: 100%;
   display: flex;
   margin-bottom: 10px; /* Espacio entre la imagen y el texto */
-  padding: auto;
+  --background-color: transparent; /* Fondo transparente */
+  
 }
 
 ion-label {
+  height: 100%;
   margin-left: 20px;
   font-size: 16px; /* Tamaño de fuente ajustado */
   color: #fff; /* Color de texto blanco para contraste con el fondo */
+  --background-color: transparent; /* Fondo transparente */
 }
 
 img {

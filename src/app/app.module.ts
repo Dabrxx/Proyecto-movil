@@ -13,7 +13,6 @@ import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 // Mantener provideHttpClient para usar el servicio HTTP
 import { provideHttpClient } from '@angular/common/http';
@@ -31,7 +30,6 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     IonicStorageModule.forRoot(),
     AngularFireModule,
     AngularFireAuthModule,
-    AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [
