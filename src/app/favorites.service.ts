@@ -15,16 +15,17 @@ export class FavoritesService {
   ) {}
 
   // Añadir un favorito
-  async addFavorite(photo: string, commonName: string, scientificName: string, description: string) {
-    const userId = await this.authService.getUserUID();  // Obtiene el UID del usuario
+  async addFavorite(photo: string, commonName: string, scientificName: string, description: string, birdId: string) {
+    const userId = await this.authService.getUserUID(); // Obtiene el UID del usuario
   
     if (userId) {
       const favorite = {
-        userId: userId, // Asegúrate de que el UID del usuario esté aquí
+        userId: userId, // UID del usuario
         photo: photo,
         commonName: commonName,
         scientificName: scientificName,
-        description: description
+        description: description,
+        birdId: birdId // Agregar birdId al objeto
       };
   
       // Agregar el documento a la colección 'favorites'

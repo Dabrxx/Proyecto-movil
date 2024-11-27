@@ -43,8 +43,12 @@ export class PrefferPage implements OnInit {
     });
   }
 
-  viewFavoriteDetails(favoriteId: string) {
-    // Redirige a species-details pasando el ID del favorito
-    this.router.navigate(['/species-details', favoriteId]);
+  viewFavoriteDetails(favorite: any) {
+    // Redirige a species-details pasando el birdId del favorito
+    if (favorite.birdId) {
+      this.router.navigate(['/species-details', favorite.birdId]);
+    } else {
+      console.error('birdId no encontrado en el favorito');
+    }
   }
 }

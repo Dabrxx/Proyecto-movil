@@ -12,6 +12,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class SpeciesDetailsPage implements OnInit {
   bird: any;
+  isFavorite: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +34,18 @@ export class SpeciesDetailsPage implements OnInit {
           description: this.getFullDescription(bird) || 'Descripción no disponible',
           location: bird.place_guess || 'Lugar no disponible',
         };
+
+        this.checkIfFavorite(birdId);
+      });
+    }
+  }
+
+  async checkIfFavorite(birdId: string) {
+    const user = await this.afAuth.currentUser;
+    if (user) {
+      this.favoritesService.getFavorites(user.uid).subscribe((favorites) => {
+        // Verificar si el birdId ya existe en la lista de favoritos
+        this.isFavorite = favorites.some((fav) => fav.birdId === birdId);
       });
     }
   }
@@ -51,12 +64,15 @@ export class SpeciesDetailsPage implements OnInit {
   // Método para agregar a favoritos
   async addToFavorites() {
     const { photo, commonName, scientificName, description } = this.bird;
-
+  
+    // Obtener el ID del ave desde la URL
+    const birdId = this.route.snapshot.paramMap.get('id');
+  
     // Obtener el usuario autenticado
     const user = await this.afAuth.currentUser;
-    if (user) {
+    if (user && birdId) {
       // Llamamos al servicio de favoritos pasando los parámetros correctos
-      this.favoritesService.addFavorite(photo, commonName, scientificName, description)
+      this.favoritesService.addFavorite(photo, commonName, scientificName, description, birdId)
         .then(() => {
           this.presentToast('Pájaro añadido a favoritos');
         })
@@ -65,7 +81,7 @@ export class SpeciesDetailsPage implements OnInit {
           this.presentToast('Error al añadir a favoritos', 'danger');
         });
     } else {
-      console.error('Usuario no autenticado');
+      console.error('Usuario no autenticado o birdId no encontrado');
       this.presentToast('Por favor, inicie sesión', 'danger');
     }
   }

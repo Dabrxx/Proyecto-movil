@@ -1,29 +1,24 @@
 <ion-content [fullscreen]="true">
   <div class="screen">
     <!-- Botón de regreso -->
-    <div>
-      <ion-button class="back-button" [routerLink]="['/home']">
-        <ion-icon name="chevron-back"></ion-icon>
-      </ion-button>
+    <ion-button class="back-button" [routerLink]="['/home']">
+      <ion-icon name="chevron-back"></ion-icon>
+    </ion-button>
+
+    <!-- Título principal -->
+    <div class="header">
+      <h1>Mis Favoritos</h1>
     </div>
 
-    <div>
-      <p class="center">Catálogo de aves</p>
+    <!-- Lista o mensaje -->
+    <div *ngIf="favorites.length === 0" class="empty-state">
+      <ion-icon name="bookmark-outline" class="icon"></ion-icon>
+      <p>No tienes favoritos guardados.</p>
     </div>
 
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Mis Favoritos</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <div *ngIf="favorites.length === 0">
-      <p class="center">No tienes favoritos guardados.</p>
-    </div>
-
-    <ion-list *ngIf="favorites.length > 0">
-      <ion-item *ngFor="let favorite of favorites">
-        <ion-thumbnail slot="start">
+    <ion-list *ngIf="favorites.length > 0" class="favorites-list">
+      <ion-item *ngFor="let favorite of favorites" class="favorite-item">
+        <ion-thumbnail slot="start" class="thumbnail">
           <img [src]="favorite.photo" alt="Imagen del pájaro" />
         </ion-thumbnail>
 
@@ -31,13 +26,19 @@
           <h2>{{ favorite.commonName }}</h2>
           <p>{{ favorite.scientificName }}</p>
         </ion-label>
-        
-        <ion-button fill="clear" color="danger" (click)="deleteFavorite(favorite.id)">
-          Eliminar
-        </ion-button>
-        <ion-button fill="clear" color="primary" (click)="modifyFavorite(favorite)">
-          Modificar
-        </ion-button>
+
+        <!-- Contenedor de botones con scroll -->
+        <div class="button-container">
+          <ion-button fill="solid" color="primary" (click)="viewFavoriteDetails(favorite)">
+            Ver detalles
+          </ion-button>
+          <ion-button fill="outline" color="danger" (click)="deleteFavorite(favorite.id)">
+            Eliminar
+          </ion-button>
+          <ion-button fill="outline" color="secondary" (click)="modifyFavorite(favorite)">
+            Modificar
+          </ion-button>
+        </div>
       </ion-item>
     </ion-list>
   </div>
