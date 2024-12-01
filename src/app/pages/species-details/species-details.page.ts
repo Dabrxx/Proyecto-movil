@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpeciesService } from '../../services/species.service';
-import { FavoritesService } from 'src/app/favorites.service';
-import { ToastController } from '@ionic/angular';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-species-details',
@@ -12,20 +9,17 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class SpeciesDetailsPage implements OnInit {
   bird: any;
-  isFavorite: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private speciesService: SpeciesService,
-    private favoritesService: FavoritesService,
-    private toastController: ToastController,
-    private afAuth: AngularFireAuth,
+    private speciesService: SpeciesService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     const birdId = this.route.snapshot.paramMap.get('id');
     if (birdId) {
-      this.speciesService.getBirdData(birdId).subscribe((response: any) => {
+      try {
+        const response: any = await this.speciesService.getBirdData(birdId).toPromise();
         const bird = response.results[0];
         this.bird = {
           photo: bird.default_photo?.medium_url || 'No disponible',
@@ -34,19 +28,9 @@ export class SpeciesDetailsPage implements OnInit {
           description: this.getFullDescription(bird) || 'Descripción no disponible',
           location: bird.place_guess || 'Lugar no disponible',
         };
-
-        this.checkIfFavorite(birdId);
-      });
-    }
-  }
-
-  async checkIfFavorite(birdId: string) {
-    const user = await this.afAuth.currentUser;
-    if (user) {
-      this.favoritesService.getFavorites(user.uid).subscribe((favorites) => {
-        // Verificar si el birdId ya existe en la lista de favoritos
-        this.isFavorite = favorites.some((fav) => fav.birdId === birdId);
-      });
+      } catch (error) {
+        console.error('Error al obtener los detalles del ave:', error);
+      }
     }
   }
 
@@ -59,40 +43,5 @@ export class SpeciesDetailsPage implements OnInit {
   // Función para eliminar etiquetas HTML
   stripHtml(html: string): string {
     return html ? html.replace(/<[^>]+>/g, '') : '';
-  }
-
-  // Método para agregar a favoritos
-  async addToFavorites() {
-    const { photo, commonName, scientificName, description } = this.bird;
-  
-    // Obtener el ID del ave desde la URL
-    const birdId = this.route.snapshot.paramMap.get('id');
-  
-    // Obtener el usuario autenticado
-    const user = await this.afAuth.currentUser;
-    if (user && birdId) {
-      // Llamamos al servicio de favoritos pasando los parámetros correctos
-      this.favoritesService.addFavorite(photo, commonName, scientificName, description, birdId)
-        .then(() => {
-          this.presentToast('Pájaro añadido a favoritos');
-        })
-        .catch((error) => {
-          console.error('Error al añadir a favoritos:', error);
-          this.presentToast('Error al añadir a favoritos', 'danger');
-        });
-    } else {
-      console.error('Usuario no autenticado o birdId no encontrado');
-      this.presentToast('Por favor, inicie sesión', 'danger');
-    }
-  }
-
-  // Función para mostrar un toast de éxito/error
-  async presentToast(message: string, color: string = 'success') {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000,
-      color: color,
-    });
-    toast.present();
   }
 }

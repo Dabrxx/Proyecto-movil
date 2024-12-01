@@ -10,6 +10,7 @@ ion-content {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  z-index: 10;
 }
 
 .header {
@@ -84,7 +85,7 @@ ion-label p {
 
 ion-button {
   font-size: 14px;
-  min-width: 90px;
+  min-width: 48px;
   --background: #007bff;
   --color: #fff;
 }
@@ -97,4 +98,34 @@ ion-button {
   --color: #fff;
   border-radius: 50%;
   z-index: 1000;
+}
+.plant-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: -1; /* Envía las plantas al fondo */
+}
+
+.plant {
+  max-height: 170px; /* Tamaño de las plantas */
+  object-fit: contain; /* Asegura que las imágenes no se deformen */
+  opacity: 0.9; /* Transparencia para integrarlas mejor */
+}
+
+.plant-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: scale(1.0); /* Aumenta el tamaño */
+}
+
+.plant-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: scale(1.0); /* Aumenta el tamaño */
 }

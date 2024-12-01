@@ -3,7 +3,9 @@
     <ion-title class="title">Perfil</ion-title>
     <p class="subTitle">Actualice su nombre de usuario</p>
   </div>
-
+  <ion-button class="back-button" [routerLink]="['/home']">
+    <ion-icon name="chevron-back"></ion-icon>
+  </ion-button>
   <div class="bird-icon">
     <div class="circle">
       <img
@@ -27,12 +29,15 @@
     </ion-item>
 
     <div class="button-container">
-      <ion-button class="back-button" [routerLink]="['/home']">
-        <ion-icon name="chevron-back"></ion-icon>
-      </ion-button>
-      <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">Actualizar Perfil</ion-button>
+      <ion-button expand="block" type="submit">Actualizar Perfil</ion-button>
       <ion-button expand="block" color="danger" (click)="deleteUserProfile()">Eliminar Cuenta</ion-button>
       <ion-button expand="block" (click)="logout()" color="danger">Cerrar sesión</ion-button>
     </div>
   </form>
+
+  <div class="plant-wrapper">
+    <img src="assets/planta-izq.png" alt="Planta izquierda" class="plant-left" />
+    <img src="assets/planta-der.png" alt="Planta derecha" class="plant-right" />
+  </div>
+
 </ion-content>

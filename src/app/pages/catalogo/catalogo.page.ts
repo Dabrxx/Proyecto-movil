@@ -12,15 +12,18 @@ export class CatalogoPage implements OnInit {
 
   constructor(private speciesService: SpeciesService, private router: Router) {}
 
-  ngOnInit() {
-    this.speciesService.getBirdData().subscribe((response: any) => {
+  async ngOnInit() {
+    try {
+      const response: any = await this.speciesService.getBirdData().toPromise();
       this.birds = response.results.map((bird: any) => ({
         id: bird.id,
         photo: bird.default_photo?.medium_url || 'No disponible',
         commonName: bird.preferred_common_name || 'No disponible',
         scientificName: bird.name || 'No disponible',
       }));
-    });
+    } catch (error) {
+      console.error('Error al obtener datos de aves:', error);
+    }
   }
 
   viewBirdDetails(bird: any) {
