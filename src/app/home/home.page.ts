@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticaService } from '../authentica.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../storageS.service';
@@ -11,33 +11,54 @@ import { StorageService } from '../storageS.service';
 export class HomePage implements OnInit {
   userName: string;
 
-  constructor(public route:Router ,public authService:AuthenticaService, private storageService: StorageService) {}
+  constructor(
+    public route: Router,
+    public authService: AuthenticaService,
+    private storageService: StorageService
+  ) {}
 
-  async ngOnInit() {
-    this.loadUserName()
+  ngOnInit(): void {
+    this.initUserName(); // Método síncrono que inicia el flujo
   }
 
-  ionViewWillEnter() {
-    this.loadUserName()
+  ionViewWillEnter(): void {
+    this.initUserName(); // Reutilizamos la misma función para consistencia
   }
 
-  async loadUserName(){
-    const storedUser = await this.storageService.get('user')
-
-    if (storedUser) {
-      this.userName = storedUser.displayName || 'Usuario';
-    } else {
-      const user = await this.authService.getProfile();
-      if(user) {
-        this.userName = user.displayName || 'Usuario';
-
-        await this.storageService.set('user', {
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email
-        })
+  private async initUserName(): Promise<void> {
+    try {
+      const storedUser = await this.storageService.get('user');
+      if (storedUser) {
+        this.setUserName(storedUser.displayName);
+      } else {
+        await this.fetchAndStoreUserProfile();
       }
+    } catch (error) {
+      console.error('Error initializing user name:', error);
+      this.setUserName('Usuario'); // Valor predeterminado en caso de error
     }
   }
 
+  private async fetchAndStoreUserProfile(): Promise<void> {
+    try {
+      const user = await this.authService.getProfile();
+      if (user) {
+        this.setUserName(user.displayName);
+        await this.storageService.set('user', {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        });
+      } else {
+        this.setUserName('Usuario');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      this.setUserName('Usuario');
+    }
+  }
+
+  private setUserName(displayName: string | undefined): void {
+    this.userName = displayName || 'Usuario';
+  }
 }
