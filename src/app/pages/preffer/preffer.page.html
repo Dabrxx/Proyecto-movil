@@ -16,6 +16,23 @@
       <p>No tienes favoritos guardados.</p>
     </div>
 
+    <ion-list>
+      <ion-item *ngFor="let bird of birds">
+        <ion-avatar slot="start">
+          <img [src]="bird.photo_url || 'assets/default-image.jpg'" />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ bird.name }}</h2>
+          <p>{{ bird.description }}</p>
+        </ion-label>
+  
+        <ion-buttons slot="end">
+          <ion-button (click)="viewBirdDetails(bird)">Ver detalles</ion-button>
+          <ion-button color="danger" (click)="deleteBird(bird.id)">Eliminar</ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
     <ion-list *ngIf="favorites.length > 0" class="favorites-list">
       <ion-item *ngFor="let favorite of favorites" class="favorite-item">
         <ion-thumbnail slot="start" class="thumbnail">

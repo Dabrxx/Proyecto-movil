@@ -32,7 +32,12 @@
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "mapbox-gl",
+              "@ionic/storage",
+              "@supabase/realtime-js"
+            ]
           },
           "configurations": {
             "production": {

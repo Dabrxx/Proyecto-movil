@@ -23,13 +23,14 @@
       "es2018", 
       "dom"
     ],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "allowSyntheticDefaultImports": true,  // Habilitado para importar módulos con 'export =' como default
+    "esModuleInterop": true               // Asegura la interoperabilidad entre módulos
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": false
-  },
-  
+  }
 }
