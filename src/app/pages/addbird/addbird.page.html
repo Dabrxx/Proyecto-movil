@@ -7,6 +7,7 @@
 <ion-content>
   <form (ngSubmit)="submitBirdForm()">
     <ion-grid>
+      <!-- Nombre del ave -->
       <ion-row>
         <ion-col size="12">
           <ion-item>
@@ -16,6 +17,7 @@
         </ion-col>
       </ion-row>
 
+      <!-- Nombre científico -->
       <ion-row>
         <ion-col size="12">
           <ion-item>
@@ -25,6 +27,7 @@
         </ion-col>
       </ion-row>
 
+      <!-- Descripción -->
       <ion-row>
         <ion-col size="12">
           <ion-item>
@@ -34,36 +37,20 @@
         </ion-col>
       </ion-row>
 
+      <!-- Selección de colores -->
       <ion-row>
         <ion-col size="12">
           <ion-item>
             <ion-label position="stacked">Colores <ion-text color="danger">*</ion-text></ion-label>
             <ion-select [(ngModel)]="colors" name="colors" multiple="true" placeholder="Selecciona colores">
-              <ion-select-option value="Rojo">Rojo</ion-select-option>
-              <ion-select-option value="Azul">Azul</ion-select-option>
-              <ion-select-option value="Verde">Verde</ion-select-option>
-              <ion-select-option value="Amarillo">Amarillo</ion-select-option>
-              <ion-select-option value="Naranja">Naranja</ion-select-option>
-              <ion-select-option value="Morado">Morado</ion-select-option>
-              <ion-select-option value="Rosa">Rosa</ion-select-option>
-              <ion-select-option value="Cian">Cian</ion-select-option>
-              <ion-select-option value="Magenta">Magenta</ion-select-option>
-              <ion-select-option value="Gris">Gris</ion-select-option>
-              <ion-select-option value="Negro">Negro</ion-select-option>
-              <ion-select-option value="Blanco">Blanco</ion-select-option>
-              <ion-select-option value="Marrón">Marrón</ion-select-option>
-              <ion-select-option value="Turquesa">Turquesa</ion-select-option>
-              <ion-select-option value="Beige">Beige</ion-select-option>
-              <ion-select-option value="Dorado">Dorado</ion-select-option>
-              <ion-select-option value="Plateado">Plateado</ion-select-option>
-              <ion-select-option value="Lavanda">Lavanda</ion-select-option>
-              <ion-select-option value="Oliva">Oliva</ion-select-option>
-              <ion-select-option value="Coral">Coral</ion-select-option>
+              <!-- Opciones de colores -->
+              <ion-select-option *ngFor="let color of colorOptions" [value]="color">{{ color }}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
       </ion-row>
 
+      <!-- Subir imagen -->
       <ion-row>
         <ion-col size="12">
           <ion-item>
@@ -73,22 +60,39 @@
         </ion-col>
       </ion-row>
 
+      <!-- Mapa de ubicación -->
       <ion-row>
         <ion-col size="12">
-          <ion-label>Mapa (Selecciona ubicación)</ion-label>
+          <ion-label position="stacked">Mapa (Selecciona ubicación)</ion-label>
           <div id="map-container">
             <div id="map"></div>
             <div id="map-pointer">📍</div>
           </div>
-          <ion-button expand="full" (click)="registerCoordinates()">Registrar Coordenadas</ion-button>
         </ion-col>
       </ion-row>
 
+      <!-- Coordenadas -->
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked">Latitud</ion-label>
+            <ion-input [(ngModel)]="latitude" name="latitude" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked">Longitud</ion-label>
+            <ion-input [(ngModel)]="longitude" name="longitude" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <!-- Botón para enviar -->
       <ion-row>
         <ion-col size="12">
           <ion-button expand="full" type="submit" color="primary" [disabled]="!isFormValid()">Enviar</ion-button>
         </ion-col>
-      </ion-row> 
+      </ion-row>
     </ion-grid>
   </form>
 </ion-content>

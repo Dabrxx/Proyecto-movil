@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { SupabaseService } from '../../services/supabase.service';
-import * as mapboxgl from 'mapbox-gl';  // Importamos mapbox-gl
+import { CrudService } from '../../services/crud.service'; // Importa correctamente CrudService
+import * as mapboxgl from 'mapbox-gl'; // Importamos mapbox-gl
 
 @Component({
   selector: 'app-addbird',
@@ -19,7 +19,7 @@ export class AddbirdPage implements AfterViewInit {
 
   map!: mapboxgl.Map;
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private crudService: CrudService) {}
 
   ngAfterViewInit() {
     this.initMap();
@@ -27,44 +27,20 @@ export class AddbirdPage implements AfterViewInit {
 
   // Inicializa el mapa de Mapbox
   initMap() {
-    // Sin asignar accessToken aquí (lo usaremos desde el mapa directamente)
     this.map = new mapboxgl.Map({
-      container: 'map',  // ID del div del mapa
+      container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-70.6483, -33.4569],  // Coordenadas iniciales (Santiago de Chile)
+      center: [-71.53285158962608, -33.03383294345084], // Coordenadas iniciales
       zoom: 10,
-      accessToken: 'pk.eyJ1IjoiYmlvZGl2ZXJzaWRhZCIsImEiOiJjbTQ2ZzJudmEwdGN1MnZwa3J5MWNmMjk4In0.u-3Ducr0OwlE-QsLYJmCiA'  // Coloca el token directamente aquí
+      accessToken: 'pk.eyJ1IjoiYmlvZGl2ZXJzaWRhZCIsImEiOiJjbTQ2ZzJudmEwdGN1MnZwa3J5MWNmMjk4In0.u-3Ducr0OwlE-QsLYJmCiA',
     });
 
-    // Actualizar coordenadas en tiempo real cuando el mapa se mueve
+    // Actualizar coordenadas al mover el mapa
     this.map.on('move', () => {
       const center = this.map.getCenter();
       this.latitude = center.lat;
       this.longitude = center.lng;
     });
-  }
-
-  // Buscar ubicación con la API de Mapbox
-  async searchLocation() {
-    if (this.searchQuery.trim() === '') return;
-
-    try {
-      const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          this.searchQuery
-        )}.json?access_token=pk.eyJ1IjoiYmlvZGl2ZXJzaWRhZCIsImEiOiJjbTQ2ZzJudmEwdGN1MnZwa3J5MWNmMjk4In0.u-3Ducr0OwlE-QsLYJmCiA`
-      );
-      const data = await response.json();
-
-      if (data.features && data.features.length > 0) {
-        const [lng, lat] = data.features[0].geometry.coordinates;
-        this.map.flyTo({ center: [lng, lat], zoom: 14 });
-      } else {
-        console.error('Ubicación no encontrada');
-      }
-    } catch (error) {
-      console.error('Error en la búsqueda de ubicación:', error);
-    }
   }
 
   // Registrar archivo seleccionado
@@ -80,14 +56,6 @@ export class AddbirdPage implements AfterViewInit {
     return this.birdName && this.imageFile && this.latitude && this.longitude;
   }
 
-  // Registrar coordenadas seleccionadas
-  registerCoordinates() {
-    console.log('Coordenadas registradas:', {
-      latitude: this.latitude,
-      longitude: this.longitude,
-    });
-  }
-
   // Enviar datos del ave
   async submitBirdForm() {
     if (!this.isFormValid()) {
@@ -96,10 +64,10 @@ export class AddbirdPage implements AfterViewInit {
     }
 
     try {
-      // Subir la imagen al bucket de Supabase
-      const { data, error } = await this.supabaseService.uploadImage(this.imageFile);
-      if (error) {
-        console.error('Error al subir la imagen:', error);
+      // Subir la imagen al bucket
+      const { data: imageData, error: imageError } = await this.crudService.uploadImage(this.imageFile);
+      if (imageError) {
+        console.error('Error al subir la imagen:', imageError);
         return;
       }
 
@@ -108,14 +76,14 @@ export class AddbirdPage implements AfterViewInit {
         name: this.birdName,
         scientific_name: this.scientificName || null,
         description: this.description || null,
-        colors: this.colors.join(','), // Convierte el arreglo a una cadena separada por comas
-        photo_url: data?.path, // Usamos 'path' para obtener la ruta de la imagen
+        colors: this.colors.join(','), // Convierte el arreglo a cadena separada por comas
+        photo_url: imageData?.path, // Ruta de la imagen subida
         latitude: this.latitude,
         longitude: this.longitude,
       };
 
       // Insertar los datos del ave en la base de datos
-      const { error: insertError } = await this.supabaseService.insertBirdData(birdData);
+      const { error: insertError } = await this.crudService.createBird(birdData);
       if (insertError) {
         console.error('Error al insertar los datos del ave:', insertError);
       } else {
@@ -125,4 +93,7 @@ export class AddbirdPage implements AfterViewInit {
       console.error('Error al enviar el formulario:', error);
     }
   }
+
+  colorOptions = ['Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'Morado', 'Rosa', 'Gris', 'Negro', 'Blanco'];
+
 }

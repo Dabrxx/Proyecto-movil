@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FavoritesService } from 'src/app/favorites.service';
-import { SupabaseService } from '../../services/supabase.service';
+import { CrudService } from '../../services/crud.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 
@@ -10,32 +10,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./preffer.page.scss'],
 })
 export class PrefferPage implements OnInit {
-  favorites: any[] = []; // Usado para favoritos de Firebase
-  birds: any[] = []; // Usado para aves desde Supabase
+  favorites: any[] = []; // Lista de favoritos de Firebase
+  birds: any[] = []; // Lista de aves desde Supabase
 
   constructor(
     private favoritesService: FavoritesService,
-    private supabaseService: SupabaseService,
+    private crudService: CrudService, // Servicio CRUD centralizado
     private afAuth: AngularFireAuth,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.loadBirds(); // Cargamos aves de Supabase
-    this.loadFavorites(); // Cargamos favoritos de Firebase
+    this.loadBirds(); // Cargar aves de Supabase
+    this.loadFavorites(); // Cargar favoritos de Firebase
   }
 
   // Cargar aves desde Supabase
   async loadBirds() {
     try {
-      const { data, error } = await this.supabaseService.getBirds();
+      const { data, error } = await this.crudService.getAllBirds(); // Usamos el servicio CRUD
       if (error) {
-        console.error('Error al obtener las aves', error);
+        console.error('Error al obtener las aves:', error.message);
       } else {
-        this.birds = data;
+        this.birds = data || [];
       }
     } catch (error) {
-      console.error('Error al cargar aves', error);
+      console.error('Error inesperado al cargar aves:', error);
     }
   }
 
@@ -44,42 +44,46 @@ export class PrefferPage implements OnInit {
     this.afAuth.currentUser.then((user) => {
       if (user) {
         this.favoritesService.getFavorites(user.uid).subscribe((data) => {
-          this.favorites = data;
+          this.favorites = data || [];
         });
       }
+    }).catch((error) => {
+      console.error('Error al obtener el usuario autenticado:', error);
     });
   }
 
-  // Modificar favorito de Firebase
+  // Modificar favorito en Firebase
   modifyFavorite(favorite: any) {
-    console.log('Modificar favorito:', favorite);
-    // Lógica para modificar
+    console.log('Modificando favorito:', favorite);
+    // Implementar lógica para modificar favorito
   }
 
-  // Modificar ave de Supabase
+  // Modificar ave en Supabase
   modifyBird(bird: any) {
-    console.log('Modificar ave:', bird);
-    // Lógica para modificar
+    console.log('Modificando ave:', bird);
+    // Implementar lógica para modificar ave
   }
 
   // Eliminar favorito de Firebase
   deleteFavorite(id: string) {
     this.favoritesService.deleteFavorite(id).then(() => {
-      console.log('Favorito eliminado');
-    }).catch(error => {
-      console.error('Error al eliminar favorito:', error);
+      console.log('Favorito eliminado correctamente');
+    }).catch((error) => {
+      console.error('Error al eliminar el favorito:', error);
     });
   }
 
   // Eliminar ave de Supabase
   deleteBird(id: string) {
-    this.supabaseService.deleteBird(id).then(() => {
-      console.log('Ave eliminada');
-      this.loadBirds(); // Recargamos aves después de eliminar
+    this.crudService.deleteBird(id).then(() => {
+      console.log('Ave eliminada correctamente');
+      this.loadBirds(); // Recargar la lista de aves
+    }).catch((error) => {
+      console.error('Error al eliminar el ave:', error);
     });
   }
 
-  // Ver detalles de favorito de Firebase
+  // Ver detalles de un favorito (Firebase)
   viewFavoriteDetails(favorite: any) {
     if (favorite.birdId) {
       this.router.navigate(['/species-details', favorite.birdId]);
@@ -88,7 +92,7 @@ export class PrefferPage implements OnInit {
     }
   }
 
-  // Ver detalles de ave de Supabase
+  // Ver detalles de un ave (Supabase)
   viewBirdDetails(bird: any) {
     if (bird.id) {
       this.router.navigate(['/species-details', bird.id]);
