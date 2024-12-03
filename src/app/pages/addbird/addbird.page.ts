@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { CrudService } from '../../services/crud.service'; // Importa correctamente CrudService
+import { CrudService } from '../../services/crud.service'; // Importa CrudService
 import * as mapboxgl from 'mapbox-gl'; // Importamos mapbox-gl
 
 @Component({
@@ -12,10 +12,9 @@ export class AddbirdPage implements AfterViewInit {
   scientificName: string = '';
   description: string = '';
   colors: string[] = [];
-  imageFile!: File;
   latitude: number = 0;
   longitude: number = 0;
-  searchQuery: string = '';
+  imageFile!: File;  // Variable para almacenar el archivo de la imagen
 
   map!: mapboxgl.Map;
 
@@ -43,7 +42,7 @@ export class AddbirdPage implements AfterViewInit {
     });
   }
 
-  // Registrar archivo seleccionado
+  // Maneja la selección de la imagen
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -53,10 +52,10 @@ export class AddbirdPage implements AfterViewInit {
 
   // Validar el formulario
   isFormValid() {
-    return this.birdName && this.imageFile && this.latitude && this.longitude;
+    return this.birdName && this.latitude && this.longitude && this.imageFile;
   }
 
-  // Enviar datos del ave
+  // Enviar los datos del formulario
   async submitBirdForm() {
     if (!this.isFormValid()) {
       console.error('Formulario inválido');
@@ -64,10 +63,16 @@ export class AddbirdPage implements AfterViewInit {
     }
 
     try {
-      // Subir la imagen al bucket
+      // Subir la imagen al bucket 'bird_photos'
       const { data: imageData, error: imageError } = await this.crudService.uploadImage(this.imageFile);
       if (imageError) {
         console.error('Error al subir la imagen:', imageError);
+        return;
+      }
+
+      // Verificar si la imagen se subió correctamente
+      if (!imageData?.path) {
+        console.error('No se obtuvo la URL de la imagen');
         return;
       }
 
@@ -77,9 +82,9 @@ export class AddbirdPage implements AfterViewInit {
         scientific_name: this.scientificName || null,
         description: this.description || null,
         colors: this.colors.join(','), // Convierte el arreglo a cadena separada por comas
-        photo_url: imageData?.path, // Ruta de la imagen subida
         latitude: this.latitude,
         longitude: this.longitude,
+        photo_url: imageData.path, // Usar la URL de la imagen subida
       };
 
       // Insertar los datos del ave en la base de datos
@@ -87,7 +92,8 @@ export class AddbirdPage implements AfterViewInit {
       if (insertError) {
         console.error('Error al insertar los datos del ave:', insertError);
       } else {
-        console.log('Ave agregada correctamente');
+        // Mostrar mensaje de éxito al usuario
+        alert('¡Ave agregada correctamente!');
       }
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
@@ -95,5 +101,4 @@ export class AddbirdPage implements AfterViewInit {
   }
 
   colorOptions = ['Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'Morado', 'Rosa', 'Gris', 'Negro', 'Blanco'];
-
 }
