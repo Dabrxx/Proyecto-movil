@@ -3,6 +3,7 @@ import { FavoritesService } from 'src/app/favorites.service';
 import { CrudService } from '../../services/crud.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { SupabaseService } from '../../services/supabase.service'; // Importar el servicio Supabase
 
 @Component({
   selector: 'app-preffer',
@@ -13,27 +14,40 @@ export class PrefferPage implements OnInit {
   favorites: any[] = []; // Lista de favoritos de Firebase
   birds: any[] = []; // Lista de aves desde Supabase
   segmentValue: string = 'birds'; // Valor inicial del segmento
+  session: any; // Almacenar la sesión activa
 
   constructor(
     private favoritesService: FavoritesService,
-    private crudService: CrudService, // Servicio CRUD centralizado
+    private crudService: CrudService,
     private afAuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private supabaseService: SupabaseService // Inyectar el servicio Supabase
   ) {}
 
   ngOnInit() {
     this.loadBirds(); // Cargar aves de Supabase
     this.loadFavorites(); // Cargar favoritos de Firebase
+    this.checkSession(); // Verificar la sesión activa de Supabase
+  }
+
+  // Método para verificar si hay una sesión activa
+  async checkSession() {
+    this.session = await this.supabaseService.getSession();
+    console.log('Sesión activa:', this.session);
   }
 
   // Cargar aves desde Supabase
   async loadBirds() {
     try {
-      const { data, error } = await this.crudService.getAllBirds(); // Usamos el servicio CRUD
+      const { data, error } = await this.crudService.getAllBirds();
       if (error) {
         console.error('Error al obtener las aves:', error.message);
       } else {
-        this.birds = data || [];
+        // Generar las URLs de las imágenes usando el servicio Supabase
+        this.birds = (data || []).map(bird => ({
+          ...bird,
+          photo_url: bird.photo_url ? this.supabaseService.getPublicImageUrl(bird.photo_url) : 'assets/default-image.jpg', // Usar el servicio para generar la URL
+        }));
       }
     } catch (error) {
       console.error('Error inesperado al cargar aves:', error);
@@ -94,9 +108,9 @@ export class PrefferPage implements OnInit {
   }
 
   // Ver detalles de un ave (Supabase)
-  viewBirdDetails(bird: any) {
+  viewBirdDetailsSupa(bird: any) {
     if (bird.id) {
-      this.router.navigate(['/species-details', bird.id]);
+      this.router.navigate(['/bird-details', bird.id]);
     } else {
       console.error('ID de ave no encontrado');
     }

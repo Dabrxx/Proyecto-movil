@@ -50,9 +50,14 @@ const routes: Routes = [
   {
     path: 'preffer',
     loadChildren: () => import('./pages/preffer/preffer.module').then( m => m.PrefferPageModule)
-  },  {
+  },
+  {
     path: 'addbird',
     loadChildren: () => import('./pages/addbird/addbird.module').then( m => m.AddbirdPageModule)
+  },
+  {
+    path: 'bird-details',
+    loadChildren: () => import('./pages/bird-details/bird-details.module').then( m => m.BirdDetailsPageModule)
   },
 
 

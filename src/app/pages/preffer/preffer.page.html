@@ -13,7 +13,7 @@
     <!-- Segmento para alternar entre listas -->
     <ion-segment [(ngModel)]="segmentValue">
       <ion-segment-button value="birds">
-        <ion-label>Aves</ion-label>
+        <ion-label>Mis aves</ion-label>
       </ion-segment-button>
       <ion-segment-button value="favorites">
         <ion-label>Favoritos</ion-label>
@@ -21,26 +21,23 @@
     </ion-segment>
 
     <!-- Lista de aves -->
-    <ion-segment-content *ngIf="segmentValue === 'birds'">
-      <ion-list>
+    <ion-segment-content *ngIf="segmentValue === 'birds'" class="contenedor-de-lista">
+      <ion-list class="favorites-list">
         <ion-item *ngFor="let bird of birds">
-          <ion-avatar slot="start">
-            <img [src]="bird.photo_url || 'assets/default-image.jpg'" />
-          </ion-avatar>
+          <ion-thumbnail slot="start">
+            <ion-img [src]="bird.photo_url"></ion-img>
+          </ion-thumbnail>
           <ion-label>
             <h2>{{ bird.name }}</h2>
-            <p>{{ bird.description }}</p>
+            <p>{{ bird.scientific_name }}</p>
           </ion-label>
-          <ion-buttons slot="end">
-            <ion-button (click)="viewBirdDetails(bird)">Ver detalles</ion-button>
-            <ion-button color="danger" (click)="deleteBird(bird.id)">Eliminar</ion-button>
-          </ion-buttons>
+          <ion-button fill="clear" (click)="viewBirdDetailsSupa(bird)">Más detalles</ion-button>
         </ion-item>
       </ion-list>
     </ion-segment-content>
 
     <!-- Lista de favoritos -->
-    <ion-segment-content *ngIf="segmentValue === 'favorites'">
+    <ion-segment-content *ngIf="segmentValue === 'favorites'" class="contenedor-de-lista">
       <div *ngIf="favorites.length === 0" class="empty-state">
         <ion-icon name="bookmark-outline" class="icon"></ion-icon>
         <p>No tienes favoritos guardados.</p>
