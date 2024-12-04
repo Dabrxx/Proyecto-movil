@@ -21,6 +21,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { SpeciesService } from './services/species.service';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
+// **Importar FormsModule para usar ngModel**
+import { FormsModule } from '@angular/forms';  // Asegúrate de agregar esta línea
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -31,6 +34,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     AngularFireModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    FormsModule,  // **Agregar FormsModule aquí**
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -46,7 +50,15 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     })),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
-    provideFirebaseApp(() => initializeApp({"projectId":"ionicbiodiversity","appId":"1:500256860315:web:f5653dfd7f20cac0a7fe3e","databaseURL":"https://ionicbiodiversity-default-rtdb.firebaseio.com","storageBucket":"ionicbiodiversity.firebasestorage.app","apiKey":"AIzaSyBG_25O92h-ZWRYCwI6NUhRdnBYYN5r4t4","authDomain":"ionicbiodiversity.firebaseapp.com","messagingSenderId":"500256860315"})),
+    provideFirebaseApp(() => initializeApp({
+      projectId: "ionicbiodiversity",
+      appId: "1:500256860315:web:f5653dfd7f20cac0a7fe3e",
+      databaseURL: "https://ionicbiodiversity-default-rtdb.firebaseio.com",
+      storageBucket: "ionicbiodiversity.firebasestorage.app",
+      apiKey: "AIzaSyBG_25O92h-ZWRYCwI6NUhRdnBYYN5r4t4",
+      authDomain: "ionicbiodiversity.firebaseapp.com",
+      messagingSenderId: "500256860315"
+    })),
     provideFirestore(() => getFirestore()),
   ],
   bootstrap: [AppComponent],

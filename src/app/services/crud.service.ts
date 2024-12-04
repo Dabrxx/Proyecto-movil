@@ -41,4 +41,5 @@ export class CrudService {
     const fileName = `bird_photos/${Date.now()}_${file.name}`;
     return this.supabase.storage.from('bird_photos').upload(fileName, file);
   }
+  
 }
