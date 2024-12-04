@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class PrefferPage implements OnInit {
   favorites: any[] = []; // Lista de favoritos de Firebase
   birds: any[] = []; // Lista de aves desde Supabase
+  segmentValue: string = 'birds'; // Valor inicial del segmento
 
   constructor(
     private favoritesService: FavoritesService,
