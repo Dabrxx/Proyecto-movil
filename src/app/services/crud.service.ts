@@ -12,8 +12,8 @@ export class CrudService {
   }
 
   // Obtener todas las aves
-  async getAllBirds() {
-    return this.supabase.from('birds').select('*');
+  async getAllBirdsByUser(userId: string) {
+    return this.supabase.from('birds').select('*').eq('user_id', userId);
   }
 
   // Obtener un ave por ID

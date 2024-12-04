@@ -29,5 +29,5 @@ export class SupabaseService {
       console.error('Error al obtener la sesión de Supabase:', error);
       return null;
     }
-  }
+  }  
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,13 @@ export class AuthenticaService {
   constructor(public ngFireAuth: AngularFireAuth) { }
 
   async getUserUID(): Promise<string | null> {
-    const user = await this.ngFireAuth.currentUser;
+    const user = await firstValueFrom(this.ngFireAuth.authState);
     return user ? user.uid : null;
+  }
+
+  async isAuthenticated(): Promise<boolean> {
+    const user = await firstValueFrom(this.ngFireAuth.authState);
+    return !!user;
   }
 
   async registerUser (email:string, password:string, displayName: string) {

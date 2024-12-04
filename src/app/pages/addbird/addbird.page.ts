@@ -1,6 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CrudService } from '../../services/crud.service'; // Importa CrudService
 import * as mapboxgl from 'mapbox-gl'; // Importamos mapbox-gl
+import { AuthenticaService } from 'src/app/authentica.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addbird',
@@ -8,6 +10,7 @@ import * as mapboxgl from 'mapbox-gl'; // Importamos mapbox-gl
   styleUrls: ['./addbird.page.scss'],
 })
 export class AddbirdPage implements AfterViewInit {
+  
   birdName: string = '';
   scientificName: string = '';
   description: string = '';
@@ -18,7 +21,11 @@ export class AddbirdPage implements AfterViewInit {
 
   map!: mapboxgl.Map;
 
-  constructor(private crudService: CrudService) {}
+  constructor(
+    private crudService: CrudService,
+    private authService:AuthenticaService,
+    private router: Router,
+  ) {}
 
   ngAfterViewInit() {
     this.initMap();
@@ -61,39 +68,38 @@ export class AddbirdPage implements AfterViewInit {
       console.error('Formulario inválido');
       return;
     }
-
+  
     try {
-      // Subir la imagen al bucket 'bird_photos'
+      const userId = await this.authService.getUserUID();
+      if (!userId) {
+        console.error('Usuario no autenticado');
+        return;
+      }
+  
       const { data: imageData, error: imageError } = await this.crudService.uploadImage(this.imageFile);
-      if (imageError) {
+      if (imageError || !imageData?.path) {
         console.error('Error al subir la imagen:', imageError);
         return;
       }
-
-      // Verificar si la imagen se subió correctamente
-      if (!imageData?.path) {
-        console.error('No se obtuvo la URL de la imagen');
-        return;
-      }
-
-      // Crear el objeto con los datos del ave
+  
       const birdData = {
         name: this.birdName,
         scientific_name: this.scientificName || null,
         description: this.description || null,
-        colors: this.colors.join(','), // Convierte el arreglo a cadena separada por comas
+        colors: this.colors.join(','), 
         latitude: this.latitude,
         longitude: this.longitude,
-        photo_url: imageData.path, // Usar la URL de la imagen subida
+        photo_url: imageData.path,
+        user_id: userId,
       };
-
-      // Insertar los datos del ave en la base de datos
+  
       const { error: insertError } = await this.crudService.createBird(birdData);
       if (insertError) {
         console.error('Error al insertar los datos del ave:', insertError);
       } else {
-        // Mostrar mensaje de éxito al usuario
         alert('¡Ave agregada correctamente!');
+        // Navegar de vuelta a la página de preferencias (preffer)
+        this.router.navigate(['/preffer']);
       }
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
