@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button class="back-button" [routerLink]="['/home']">
+      <ion-icon name="chevron-back"></ion-icon>
+    </ion-button>
+    <ion-title>Detalles del Ave</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Imagen en grande -->
+  <ion-img [src]="photoUrl"></ion-img>
+
+  <!-- Información de la ave -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-input [(ngModel)]="bird.name" placeholder="Nombre de la ave"></ion-input>
+      </ion-card-title>
+      <ion-card-subtitle>
+        <ion-input [(ngModel)]="bird.scientific_name" placeholder="Nombre científico"></ion-input>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Descripción:</strong></p>
+      <ion-textarea [(ngModel)]="bird.description" placeholder="Descripción de la ave"></ion-textarea>
+
+      <p><strong>Colores:</strong></p>
+      <ion-input [(ngModel)]="bird.colors" placeholder="Colores de la ave"></ion-input>
+
+      <p><strong>Ubicación:</strong>
+        <a [href]="mapboxUrl" target="_blank">Ver en Mapbox</a>
+      </p>
+
+      <!-- Mapa de ubicación -->
+      <img [src]="mapboxUrl" alt="Mapa de la ubicación" />
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botones -->
+  <ion-footer>
+    <ion-button expand="full" color="primary" (click)="saveUpdates()">Guardar cambios</ion-button>
+    <ion-button expand="full" color="danger" (click)="deleteBird()">Eliminar</ion-button>
+  </ion-footer>
+</ion-content>

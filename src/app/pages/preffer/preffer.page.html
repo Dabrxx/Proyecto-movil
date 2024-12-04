@@ -10,36 +10,64 @@
       <h1>Mis Favoritos</h1>
     </div>
 
-    <!-- Lista o mensaje -->
-    <div *ngIf="favorites.length === 0" class="empty-state">
-      <ion-icon name="bookmark-outline" class="icon"></ion-icon>
-      <p>No tienes favoritos guardados.</p>
-    </div>
+    <!-- Segmento para alternar entre listas -->
+    <ion-segment [(ngModel)]="segmentValue">
+      <ion-segment-button value="birds">
+        <ion-label>Mis aves</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        <ion-label>Favoritos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-    <ion-list *ngIf="favorites.length > 0" class="favorites-list">
-      <ion-item *ngFor="let favorite of favorites" class="favorite-item">
-        <ion-thumbnail slot="start" class="thumbnail">
-          <img [src]="favorite.photo" alt="Imagen del pájaro" />
-        </ion-thumbnail>
+    <!-- Lista de aves -->
+    <ion-segment-content *ngIf="segmentValue === 'birds'" class="contenedor-de-lista">
+      <ion-list class="favorites-list">
+        <ion-item *ngFor="let bird of birds">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="bird.photo_url"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ bird.name }}</h2>
+            <p>{{ bird.scientific_name }}</p>
+          </ion-label>
+          <ion-button fill="clear" (click)="viewBirdDetailsSupa(bird)">Más detalles</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-segment-content>
 
-        <ion-label>
-          <h2>{{ favorite.commonName }}</h2>
-          <p>{{ favorite.scientificName }}</p>
-        </ion-label>
-
-        <!-- Contenedor de botones con scroll -->
-        <div class="button-container">
-          <ion-button fill="solid" color="primary" (click)="viewFavoriteDetails(favorite)">
-            Ver detalles
-          </ion-button>
-          <ion-button fill="outline" color="danger" (click)="deleteFavorite(favorite.id)">
-            Eliminar
-          </ion-button>
-          <ion-button fill="outline" color="secondary" (click)="modifyFavorite(favorite)">
-            Modificar
-          </ion-button>
-        </div>
-      </ion-item>
-    </ion-list>
+    <!-- Lista de favoritos -->
+    <ion-segment-content *ngIf="segmentValue === 'favorites'" class="contenedor-de-lista">
+      <div *ngIf="favorites.length === 0" class="empty-state">
+        <ion-icon name="bookmark-outline" class="icon"></ion-icon>
+        <p>No tienes favoritos guardados.</p>
+      </div>
+      <ion-list *ngIf="favorites.length > 0" class="favorites-list">
+        <ion-item *ngFor="let favorite of favorites" class="favorite-item">
+          <ion-thumbnail slot="start" class="thumbnail">
+            <img [src]="favorite.photo" alt="Imagen del pájaro" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ favorite.commonName }}</h2>
+            <p>{{ favorite.scientificName }}</p>
+          </ion-label>
+          <div class="button-container">
+            <ion-button fill="solid" color="primary" (click)="viewFavoriteDetails(favorite)">
+              Ver detalles
+            </ion-button>
+            <ion-button fill="outline" color="danger" (click)="deleteFavorite(favorite.id)">
+              Eliminar
+            </ion-button>
+            <ion-button fill="outline" color="secondary" (click)="modifyFavorite(favorite)">
+              Modificar
+            </ion-button>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-segment-content>
+  </div>
+  <div class="plant-wrapper">
+    <img src="assets/planta-izq.png" alt="Planta izquierda" class="plant plant-left" />
+    <img src="assets/planta-der.png" alt="Planta derecha" class="plant plant-right" />
   </div>
 </ion-content>
